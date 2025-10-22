@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CredMax - Empréstimo Rápido Sem Consultar o Serasa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #141414;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1296px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* Header */
+        header {
+            background: #fff;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: 70px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+            max-width: 1296px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-cta {
+            background: linear-gradient(90deg, #22c55e, #16a34a);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.25);
+        }
+
+        .header-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.35);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            padding: 140px 16px 80px;
+            position: relative;
+            overflow: hidden;
+            min-height: 600px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            max-width: 1296px;
+            margin: 0 auto;
+        }
+
+        .hero-text h1 {
+            font-size: 48px;
+            margin-bottom: 24px;
+            line-height: 1.2;
+            font-weight: 800;
+        }
+
+        .hero-text .highlight {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text p {
+            font-size: 20px;
+            margin-bottom: 32px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .hero-form {
+            background: #fff;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .hero-form h3 {
+            color: #0f172a;
+            font-size: 24px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .hero-form .form-subtitle {
+            color: #64748b;
+            margin-bottom: 24px;
+            font-size: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #475569;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #22c55e;
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+        }
+
+        .cta-button {
+            width: 100%;
+            background: linear-gradient(90deg, #22c55e, #16a34a);
+            color: white;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(34, 197, 94, 0.4);
+        }
+
+        /* Trust Bar */
+        .trust-bar {
+            background: #f8fafc;
+            padding: 24px 16px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .trust-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 48px;
+            flex-wrap: wrap;
+            max-width: 1296px;
+            margin: 0 auto;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #64748b;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        /* Benefits Section */
+        .benefits {
+            padding: 100px 16px;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 64px;
+        }
+
+        .section-label {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 40px;
+            margin-bottom: 16px;
+            color: #0f172a;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .section-description {
+            font-size: 18px;
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            max-width: 1296px;
+            margin: 0 auto;
+        }
+
+        .benefit-card {
+            background: #fff;
+            padding: 40px 32px;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .benefit-card:hover {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            transform: translateY(-8px);
+            border-color: #3b82f6;
+        }
+
+        .benefit-icon {
+            font-size: 48px;
+            margin-bottom: 24px;
+        }
+
+        .benefit-card h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        .benefit-card p {
+            color: #64748b;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        /* How it Works */
+        .how-it-works {
+            padding: 100px 16px;
+            background: #f8fafc;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 48px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 800;
+            margin: 0 auto 24px;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .step h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        .step p {
+            color: #64748b;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 100px 16px;
+            background: white;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            max-width: 1296px;
+            margin: 0 auto;
+        }
+
+        .testimonial {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e2e8f0;
+            position: relative;
+        }
+
+        .stars {
+            color: #fbbf24;
+            margin-bottom: 16px;
+            font-size: 20px;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: #475569;
+            margin-bottom: 24px;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .testimonial-author {
+            font-weight: 700;
+            color: #0f172a;
+            font-size: 15px;
+        }
+
+        /* FAQ */
+        .faq {
+            padding: 100px 16px;
+            background: #f8fafc;
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .faq-item:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+        }
+
+        .faq-question {
+            padding: 24px;
+            font-weight: 700;
+            color: #0f172a;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .faq-answer {
+            padding: 0 24px 24px 24px;
+            color: #64748b;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 100px 16px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-section h2 {
+            font-size: 42px;
+            margin-bottom: 24px;
+            font-weight: 800;
+        }
+
+        .cta-section p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: #0f172a;
+            color: white;
+            padding: 60px 16px 30px;
+        }
+
+        .footer-content {
+            max-width: 1296px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+
+        .footer-section h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            line-height: 2;
+            font-size: 14px;
+        }
+
+        .footer-section a:hover {
+            color: #22c55e;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+            max-width: 1296px;
+            margin: 0 auto;
+        }
+
+        .whatsapp-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .hero-text h1 {
+                font-size: 36px;
+            }
+
+            .hero-text p {
+                font-size: 18px;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+
+            .cta-section h2 {
+                font-size: 32px;
+            }
+
+            .trust-content {
+                gap: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">💰 CredMax</div>
+            <a href="#" class="header-cta" onclick="event.preventDefault(); solicitarCredito();">
+                <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                Solicitar Agora
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Empréstimo Aprovado <span class="highlight">Sem Consultar o Serasa</span></h1>
+                <p>Liberamos seu dinheiro <strong>no mesmo dia</strong> com as menores taxas do mercado. Exclusivo para trabalhadores CLT.</p>
+            </div>
+            
+            <div class="hero-form">
+                <h3>Simule seu empréstimo</h3>
+                <p class="form-subtitle">Preencha os dados e receba sua proposta em minutos</p>
+                
+                <form>
+                    <div class="form-group">
+                        <label for="nome">Nome</label>
+                        <input type="text" id="nome" placeholder="Nome" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="valor">Quanto você precisa?</label>
+                        <input type="text" id="valor" placeholder="R$" required>
+                    </div>
+                    
+                    <button type="submit" class="cta-button" onclick="solicitarCredito()">
+                        <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                        Solicitar Meu Crédito
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Bar -->
+    <section class="trust-bar">
+        <div class="trust-content">
+            <div class="trust-item">
+                <span style="font-size: 24px">🔒</span>
+                <span>100% Seguro</span>
+            </div>
+            <div class="trust-item">
+                <span style="font-size: 24px">✅</span>
+                <span>Sem Serasa</span>
+            </div>
+            <div class="trust-item">
+                <span style="font-size: 24px">⚡</span>
+                <span>Liberação no Mesmo Dia</span>
+            </div>
+            <div class="trust-item">
+                <span style="font-size: 24px">👔</span>
+                <span>Para CLT</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">ESPECIAL PRA VOCÊ</span>
+                <h2 class="section-title">Por que a CredMax é diferente?</h2>
+                <p class="section-description">
+                    Nossa tecnologia e compromisso com você garantem a melhor experiência em empréstimos
+                </p>
+            </div>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">✅</div>
+                    <h3>Sem Consulta ao Serasa</h3>
+                    <p>Seu nome sujo não é problema! Aprovamos seu crédito sem consultar o Serasa.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">⚡</div>
+                    <h3>Dinheiro no Mesmo Dia</h3>
+                    <p>Velocidade recorde! Liberamos seu crédito no mesmo dia da aprovação.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">👔</div>
+                    <h3>Exclusivo para CLT</h3>
+                    <p>Condições especiais para trabalhadores com carteira assinada.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">💰</div>
+                    <h3>Taxas Justas</h3>
+                    <p>Parcelas que cabem no seu bolso com transparência total.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">📱</div>
+                    <h3>100% Online</h3>
+                    <p>Todo processo pelo WhatsApp, sem papelada e sem burocracia.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">🎯</div>
+                    <h3>Atendimento Humanizado</h3>
+                    <p>Equipe dedicada para tirar suas dúvidas e te ajudar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">COMO FUNCIONA</span>
+                <h2 class="section-title">Solicitar seu empréstimo é rápido e fácil</h2>
+                <p class="section-description">
+                    Em apenas 3 passos simples você tem seu dinheiro na conta
+                </p>
+            </div>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Fale Conosco</h3>
+                    <p>Clique no botão e envie uma mensagem no WhatsApp com seus dados básicos</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Envie Documentos</h3>
+                    <p>Compartilhe seus documentos de forma rápida e segura pelo próprio WhatsApp</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Receba Seu Dinheiro</h3>
+                    <p>Aprovado! Dinheiro na conta no mesmo dia. Simples assim!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">DEPOIMENTOS</span>
+                <h2 class="section-title">O que nossos clientes dizem</h2>
+                <p class="section-description">
+                    Milhares de pessoas já confiaram na CredMax
+                </p>
+            </div>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"Precisava de dinheiro urgente e a CredMax me salvou! Em poucas horas o dinheiro estava na minha conta. Recomendo!"</p>
+                    <p class="testimonial-author">— Maria S., São Paulo</p>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"Achei que não conseguiria por causa do meu nome sujo, mas a CredMax aprovou meu crédito mesmo assim. Excelente atendimento!"</p>
+                    <p class="testimonial-author">— João P., Guarulhos</p>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"Processo super rápido e fácil. Fiz tudo pelo WhatsApp e no mesmo dia já tinha o dinheiro. Muito satisfeito!"</p>
+                    <p class="testimonial-author">— Carlos R., Campinas</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">DÚVIDAS</span>
+                <h2 class="section-title">Perguntas Frequentes</h2>
+            </div>
+            
+            <div class="faq-container">
+
+                <div class="faq-item">
+                    <div class="faq-question">💰 Qual o valor máximo que posso pegar emprestado?</div>
+                    <div class="faq-answer">O valor varia de acordo com sua renda e capacidade de pagamento. Entre em contato pelo WhatsApp para fazer uma simulação personalizada!</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">⏰ Quanto tempo demora para aprovar?</div>
+                    <div class="faq-answer">A análise é muito rápida! Em poucas horas você já tem uma resposta, e o dinheiro é liberado no mesmo dia da aprovação.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">❌ Funciona mesmo com nome sujo?</div>
+                    <div class="faq-answer">Sim! Não consultamos o Serasa, então restrições no nome não são impeditivas para a aprovação do seu crédito.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">💳 Preciso ter conta em banco específico?</div>
+                    <div class="faq-answer">Não! Você pode receber o dinheiro em qualquer conta bancária de sua preferência.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">🔒 Meus dados estão seguros?</div>
+                    <div class="faq-answer">Totalmente! Utilizamos as mais avançadas tecnologias de segurança para proteger suas informações pessoais.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">🤔 Outra dúvida?</div>
+                    <div class="faq-answer">Estamos aqui para ajudar! Entre em contato pelo WhatsApp e tire suas dúvidas com nossa equipe.</div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>Pronto Para Ter Seu Crédito Hoje?</h2>
+            <p>Não perca tempo! Fale conosco agora e resolva sua necessidade de dinheiro rapidamente.</p>
+            <a href="#" class="cta-button" onclick="event.preventDefault(); solicitarCredito();" style="max-width: 400px; margin: 0 auto;">
+                <svg class="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                Chamar no WhatsApp Agora
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>CredMax</h3>
+                <p>Crédito rápido e fácil para trabalhadores CLT e lojistas.</p>
+                <p style="margin-top: 20px;">
+                    <strong>WhatsApp:</strong><br>
+                    (11) 96471-0415
+                </p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Nossos Diferenciais</h3>
+                <a href="#benefits">Sem consulta ao Serasa</a><br>
+                <a href="#benefits">Liberação no mesmo dia</a><br>
+                <a href="#benefits">100% Online</a><br>
+                <a href="#benefits">Taxas justas</a>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Informações</h3>
+                <a href="#faq">Perguntas Frequentes</a><br>
+                <a href="#how">Como Funciona</a><br>
+                <a href="#testimonials">Depoimentos</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p style="margin-bottom: 16px; font-size: 12px; opacity: 0.7; line-height: 1.8;">
+                A concessão de crédito está sujeita à análise e aprovação. Consulte as condições, taxas e prazos disponíveis. 
+                CredMax - Soluções em crédito para trabalhadores CLT. Empréstimo com responsabilidade.
+            </p>
+            <p>© 2025 CredMax. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        function solicitarCredito() {
+            event.preventDefault();
+            
+            // Captura os valores do formulário
+            const nome = document.getElementById('nome').value;
+            const valor = document.getElementById('valor').value;
+            
+            // Monta a mensagem do WhatsApp
+            let mensagem = 'Olá! Quero solicitar meu empréstimo CredMax';
+            
+            if (nome && valor) {
+                mensagem += `\n\nMeus dados:\nNome: ${nome}\nValor necessário: ${valor}`;
+            } else if (nome) {
+                mensagem += `\n\nMeu nome: ${nome}`;
+            } else if (valor) {
+                mensagem += `\n\nValor necessário: ${valor}`;
+            }
+            
+            // Codifica a mensagem para URL
+            const mensagemCodificada = encodeURIComponent(mensagem);
+            
+            // Abre o WhatsApp
+            window.open(`https://wa.me/5511964710415?text=${mensagemCodificada}`, '_blank');
+        }
+    </script>
+</body>
+</html>
