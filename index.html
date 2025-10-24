@@ -582,8 +582,8 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="valor">Quanto você precisa?</label>
-                        <input type="text" id="valor" placeholder="R$" required>
+                        <label for="regiao">Região</label>
+                        <input type="text" id="regiao" placeholder="Sua cidade/região" required>
                     </div>
                     
                     <button type="submit" class="cta-button" onclick="solicitarCredito()">
@@ -838,16 +838,16 @@
             // Captura os valores do formulário
             const nome = document.getElementById('nome').value;
             const cpf = document.getElementById('cpf').value;
-            const valor = document.getElementById('valor').value;
+            const regiao = document.getElementById('regiao').value;
             
             // Monta a mensagem do WhatsApp
             let mensagem = 'Olá! Quero solicitar meu empréstimo CredMax';
             
-            if (nome || cpf || valor) {
+            if (nome || cpf || regiao) {
                 mensagem += '\n\nMeus dados:';
                 if (nome) mensagem += `\nNome: ${nome}`;
                 if (cpf) mensagem += `\nCPF: ${cpf}`;
-                if (valor) mensagem += `\nValor necessário: ${valor}`;
+                if (regiao) mensagem += `\nRegião: ${regiao}`;
             }
             
             // Codifica a mensagem para URL
