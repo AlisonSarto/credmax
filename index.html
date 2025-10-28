@@ -575,11 +575,6 @@
                         <label for="nome">Nome</label>
                         <input type="text" id="nome" placeholder="Nome" required>
                     </div>
-
-                    <div class="form-group">
-                        <label for="cpf">CPF</label>
-                        <input type="text" id="cpf" placeholder="000.000.000-00" required>
-                    </div>
                     
                     <div class="form-group">
                         <label for="regiao">Região</label>
@@ -837,7 +832,6 @@
             
             // Captura os valores do formulário
             const nome = document.getElementById('nome').value;
-            const cpf = document.getElementById('cpf').value;
             const regiao = document.getElementById('regiao').value;
             
             // Monta a mensagem do WhatsApp
@@ -846,7 +840,6 @@
             if (nome || cpf || regiao) {
                 mensagem += '\n\nMeus dados:';
                 if (nome) mensagem += `\nNome: ${nome}`;
-                if (cpf) mensagem += `\nCPF: ${cpf}`;
                 if (regiao) mensagem += `\nRegião: ${regiao}`;
             }
             
